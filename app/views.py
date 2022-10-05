@@ -4,7 +4,7 @@ from .models import Prediction
 
 
 @route_get('magic8/all')
-def riddles_all(params):
+def predictions_all(params):
     predictions_list = []
 
     for prediction in Prediction.objects.all():
@@ -12,16 +12,34 @@ def riddles_all(params):
 
     return {'predictions':predictions_list}
 
-@route_post('magic8/edit',args={'id':int,'update':str})
+@route_post('magic8/edit',args={'id':int,'updated_statement':str})
 def edit(params):
-    if 'id' not in params or 'update' not in params:
+    if 'id' not in params or 'updated_statement' not in params:
         raise BadRequest('incorrect request')
 
-    updated_statement = params['update']
+    updated_statement = params['updated_statement']
     id = params['id']
     prediction = Prediction.objects.get(id=id)
 
     prediction.statement = updated_statement
+    prediction.reset_ratings()
+    prediction.save()
+
+    return prediction.to_dict()
+
+@route_post('magic8/rate',args={'id':int,'approve':bool})
+def edit(params):
+    if 'id' not in params or 'approve' not in params:
+        raise BadRequest('incorrect request')
+
+    approve = params['approve']
+    id = params['id']
+    prediction = Prediction.objects.get(id=id)
+    if approve:
+        prediction.liked()
+    else:
+        prediction.disliked()
+
     prediction.save()
 
     return prediction.to_dict()
