@@ -1,61 +1,57 @@
 from banjo.urls import route_get, route_post
 from banjo.http import BadRequest
-from .models import Prediction
+from .models import Fortune
 
+@route_post('fortune_teller/new',args={'fortune_statement':str, 'category_school': bool, 'category_general': bool})
+def new_fortune(params):
+    fortune = Fortune.from_dict(params)
+    fortune.save()
 
-@route_get('magic8/all')
-def predictions_all(params):
-    predictions_list = []
+    return fortune.to_dict()
 
-    for prediction in Prediction.objects.all():
-        predictions_list.append(prediction.to_dict())
+@route_get('fortune_teller/all')
+def all_fortunes(params):
+    fortunes_list = []
 
-    return {'predictions':predictions_list}
+    for fortune in Fortune.objects.all():
+        fortunes_list.append(fortune.to_dict())
 
-@route_post('magic8/edit',args={'id':int,'updated_statement':str})
-def edit(params):
-    if 'id' not in params or 'updated_statement' not in params:
-        raise BadRequest('incorrect request')
+    return {'fortunes':fortunes_list}
+
+@route_post('fortune_teller/edit',args={'id':int,'updated_statement':str})
+def edit_fortune(params):
 
     updated_statement = params['updated_statement']
     id = params['id']
-    prediction = Prediction.objects.get(id=id)
+    fortune = fortune.objects.get(id=id)
 
-    prediction.statement = updated_statement
-    prediction.reset_ratings()
-    prediction.save()
+    fortune.statement = updated_statement
+    fortune.reset_ratings()
+    fortune.save()
 
-    return prediction.to_dict()
+    return fortune.to_dict()
 
-@route_post('magic8/rate',args={'id':int,'approve':bool})
-def edit(params):
-    if 'id' not in params or 'approve' not in params:
-        raise BadRequest('incorrect request')
+@route_post('fortune_teller/like',args={'id':int})
+def like_fortune(params):
 
-    approve = params['approve']
-    id = params['id']
-    prediction = Prediction.objects.get(id=id)
-    if approve:
-        prediction.liked()
-    else:
-        prediction.disliked()
+    fortune = Fortune.objects.get(id=params['id'])
+    fortune.increase_likes()
 
-    prediction.save()
+    return fortune.to_dict()
 
-    return prediction.to_dict()
 
-@route_post('magic8/new',args={'statement':str})
-def edit(params):
-    if 'statement' not in params:
-        raise BadRequest('incorrect request')
+@route_post('fortune_teller/dislike',args={'id':int})
+def dislike_fortune(params):
 
-    statement = params['statement']
-    prediction = Prediction.from_dict(params)
-    prediction.save()
-    return prediction.to_dict()
+    fortune = Fortune.objects.get(id=params['id'])
+    fortune.increase_dislikes()
 
-@route_get('magic8/random')
+    return fortune.to_dict()
+
+
+
+@route_get('fortune_teller/random')
 def random(params):
-    prediction = Prediction.objects.order_by('?').first()
+    fortune = Fortune.objects.order_by('?').first()
 
-    return prediction.to_dict()
+    return fortune.to_dict()

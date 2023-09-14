@@ -1,16 +1,23 @@
-from banjo.models import Model, StringField, IntegerField
+from banjo.models import Model, StringField, IntegerField, BooleanField
 
-class Prediction(Model):
-    statement = StringField()
+class Fortune(Model):
+    fortune_statement = StringField()
     likes = IntegerField()
     dislikes = IntegerField()
 
-    def liked(self):
-        self.likes += 1
+    category_school = BooleanField()
+    category_general = BooleanField()
 
-    def disliked(self):
+
+    def increase_likes(self):
+        self.likes += 1
+        self.save()
+
+    def increase_dislikes(self):
         self.dislikes += 1
+        self.save()
 
     def reset_ratings(self):
         self.likes = 0
         self.dislikes = 0
+        self.save()
