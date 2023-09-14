@@ -7,7 +7,7 @@ def new_fortune(params):
     fortune = Fortune.from_dict(params)
     fortune.save()
 
-    return fortune.to_dict()
+    return  {'fortune': fortune.to_dict()}
 
 @route_get('fortune_teller/all')
 def all_fortunes(params):
@@ -21,15 +21,11 @@ def all_fortunes(params):
 @route_post('fortune_teller/edit',args={'id':int,'updated_statement':str})
 def edit_fortune(params):
 
-    updated_statement = params['updated_statement']
-    id = params['id']
-    fortune = fortune.objects.get(id=id)
+    fortune = Fortune.objects.get(id=params['id'])
+    fortune.change_statement(params['updated_statement'])
 
-    fortune.statement = updated_statement
-    fortune.reset_ratings()
-    fortune.save()
 
-    return fortune.to_dict()
+    return {'fortune': fortune.to_dict()}
 
 @route_post('fortune_teller/like',args={'id':int})
 def like_fortune(params):
@@ -37,7 +33,7 @@ def like_fortune(params):
     fortune = Fortune.objects.get(id=params['id'])
     fortune.increase_likes()
 
-    return fortune.to_dict()
+    return  {'fortune': fortune.to_dict()}
 
 
 @route_post('fortune_teller/dislike',args={'id':int})
@@ -46,7 +42,7 @@ def dislike_fortune(params):
     fortune = Fortune.objects.get(id=params['id'])
     fortune.increase_dislikes()
 
-    return fortune.to_dict()
+    return  {'fortune': fortune.to_dict()}
 
 
 
@@ -54,4 +50,4 @@ def dislike_fortune(params):
 def random(params):
     fortune = Fortune.objects.order_by('?').first()
 
-    return fortune.to_dict()
+    return  {'fortune': fortune.to_dict()}

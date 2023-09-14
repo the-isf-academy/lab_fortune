@@ -17,7 +17,10 @@ class Fortune(Model):
         self.dislikes += 1
         self.save()
 
-    def reset_ratings(self):
+    def change_statement(self,new_statement):
+        self.fortune_statement = new_statement
         self.likes = 0
         self.dislikes = 0
         self.save()
+
+
