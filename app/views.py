@@ -1,8 +1,7 @@
 from banjo.urls import route_get, route_post
-from banjo.http import BadRequest
 from .models import Fortune
 
-@route_post('fortune_teller/new',args={'fortune_statement':str, 'category_school': bool, 'category_general': bool})
+@route_post('fortune_teller/new', args={'fortune_statement':str, 'category_happy': bool, 'category_sad': bool})
 def new_fortune(params):
     fortune = Fortune.from_dict(params)
     fortune.save()
@@ -24,30 +23,21 @@ def edit_fortune(params):
     fortune = Fortune.objects.get(id=params['id'])
     fortune.change_statement(params['updated_statement'])
 
-
     return {'fortune': fortune.to_dict()}
 
 @route_post('fortune_teller/like',args={'id':int})
 def like_fortune(params):
-
     fortune = Fortune.objects.get(id=params['id'])
     fortune.increase_likes()
 
     return  {'fortune': fortune.to_dict()}
 
-
-@route_post('fortune_teller/dislike',args={'id':int})
-def dislike_fortune(params):
-
-    fortune = Fortune.objects.get(id=params['id'])
-    fortune.increase_dislikes()
-
-    return  {'fortune': fortune.to_dict()}
-
-
-
-@route_get('fortune_teller/random')
+@route_get('fortune_teller/random', args={'category_happy': bool, 'category_sad': bool})
 def random(params):
-    fortune = Fortune.objects.order_by('?').first()
+    payload_category_happy = params['category_happy']
+    payload_category_sad = params['category_sad']
 
-    return  {'fortune': fortune.to_dict()}
+    fortunes_filtered = Fortune.objects.filter(category_happy=payload_category_happy).filter(category_sad=payload_category_sad)
+    random_fortune = fortunes_filtered.order_by('?').first()
+    
+    return  {'random fortune': random_fortune.to_dict()}
