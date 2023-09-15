@@ -7,7 +7,7 @@ Potential uses include a fortune teller, a magic 8 ball, or a daily astrology re
 
 ### Endpoints
 
-| Route                   | HTTP Method | Payload                                                                    |
+| Endpoint                   | HTTP Method | Payload                                                                    |
 |-------------------------|-------------|----------------------------------------------------------------------------|
 | `fortune_teller/new`    | `POST`      | `fortune_statement`: `str`  <br> `category_happy`: `bool`  <br>   `category_sad`: `bool`  |
 | `fortune_teller/all`    | `GET`       | None                                                                       |
