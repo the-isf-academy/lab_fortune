@@ -1,29 +1,36 @@
-# Project Networking
+# Lab: Banjo - Fortune
 
+## API Overview
+This API hosts fortunes. You can "like" fortunes, change them, and assign categories. 
 
-> **Don't forget to edit this `README.md` file**
->
-> If you're interested in how to format markdown, click [here](https://www.markdownguide.org/basic-syntax/#images-1)
-
-## Project Overview
-*Provide an overall description of your project here.*
-
-## Contents
-This is the starter code for the Networking Project.
-
-Here's what is included:
-- `\app`
-    - `models.py` - This is where you will define your model.
-    - `views.py` - This is where you will define your routes and endpoints.
-- `database.sqlite` - This is your database file. 
-- `README.md` This is documentation for your project.
-
-## How to Use
-*Provide instructions as to how to start your server.*
+Potential uses include a fortune teller, a magic 8 ball, or a daily astrology reading.
 
 ### Endpoints
 
-*Provide details for each of your endpoints. To format a chart in markdown, [click](https://www.tablesgenerator.com/markdown_tables).*
+| Route                   | HTTP Method | Payload                                                                    |
+|-------------------------|-------------|----------------------------------------------------------------------------|
+| `fortune_teller/new`    | `POST`      | `fortune_statement`: `str`  <br> `category_happy`: `bool`  <br>   `category_sad`: `bool`  |
+| `fortune_teller/all`    | `GET`       | None                                                                       |
+| `fortune_teller/edit`   | `POST`      | `id`: `int`                                                                |
+| `fortune_teller/like`   | `POST`      | `id`: `int`                                                                |
+| `fortune_teller/random` | `GET`       | `category_happy`: `bool`  <br>  `category_sad`: `bool`                            |
+
+
+---
+
+## Setup
+
+### Contents
+
+Here's what is included:
+- `\app`
+    - `models.py` - `Fortune` model
+    - `views.py` - endpoints
+- `database.sqlite`  
+- `README.md` 
+
+**To start a [Banjo](https://pypi.org/project/django-banjo/) server:** `banjo` 
+> *Optionally can start in debug mode with: `banjo --debug`*
 
 
 
