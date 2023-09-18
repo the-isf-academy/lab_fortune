@@ -9,11 +9,11 @@ Potential uses include a fortune teller, a magic 8 ball, or a daily astrology re
 
 | Route                   | HTTP Method | Payload                                                                    |
 |-------------------------|-------------|----------------------------------------------------------------------------|
-| `fortune_teller/new`    | `POST`      | `fortune_statement`: `str`  <br> `category_happy`: `bool`  <br>   `category_sad`: `bool`  |
-| `fortune_teller/all`    | `GET`       | None                                                                       |
-| `fortune_teller/edit`   | `POST`      | `id`: `int`                                                                |
-| `fortune_teller/like`   | `POST`      | `id`: `int`                                                                |
-| `fortune_teller/random` | `GET`       | `category_happy`: `bool`  <br>  `category_sad`: `bool`                            |
+| `fortune/new`    | `POST`      | `fortune_statement`: `str`  <br> `category_happy`: `bool`  <br>   `category_sad`: `bool`  |
+| `fortune/all`    | `GET`       | None                                                                       |
+| `fortune/edit`   | `POST`      | `id`: `int`                                                                |
+| `fortune/like`   | `POST`      | `id`: `int`                                                                |
+| `fortune/random` | `GET`       | `category_happy`: `bool`  <br>  `category_sad`: `bool`                            |
 
 
 ---

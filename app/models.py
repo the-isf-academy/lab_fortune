@@ -8,6 +8,7 @@ class Fortune(Model):
     category_sad = BooleanField()
 
     def to_dict(self):
+        
         return {
             'id': self.id,
             'fortune_statment': self.fortune_statement,
@@ -23,8 +24,10 @@ class Fortune(Model):
 
 
     def change_statement(self,new_statement):
-        self.fortune_statement = new_statement
-        self.likes = 0
+        self.fortune_statement = 
+        self.likes = 
         self.save()
+
+
 
 
