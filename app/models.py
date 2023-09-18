@@ -24,8 +24,8 @@ class Fortune(Model):
 
 
     def change_statement(self,new_statement):
-        self.fortune_statement = 
-        self.likes = 
+        self.fortune_statement = new_statement
+        self.likes = 0
         self.save()
 
 

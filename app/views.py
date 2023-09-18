@@ -4,9 +4,11 @@ from .models import Fortune
 @route_post('fortune/new', args={'fortune_statement':str, 'category_happy': bool, 'category_sad': bool})
 def new_fortune(params):
     fortune = Fortune.from_dict(params)
+
     fortune.save()
 
     return  {'fortune': fortune.to_dict()}
+
 
 @route_get('fortune/all')
 def all_fortunes(params):
